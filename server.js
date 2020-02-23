@@ -2,6 +2,34 @@
 
 /*
 |--------------------------------------------------------------------------
+| Cluster Support for Http server
+|--------------------------------------------------------------------------
+|
+| A single instance of Node.js runs in a single thread.
+| To take advantage of multi-core systems, the user will sometimes want to
+| launch a cluster of Node.js processes to handle the load.
+|
+| see: https://nodejs.org/api/cluster.html
+*/
+
+const cluster = require('cluster')
+const numCPUs = require('os').cpus().length/*
+const numCPUs = 1//*/
+
+if (cluster.isMaster) {
+
+    console.log(`master ${process.pid} is running:`);
+
+    for (let i = 0; i < numCPUs; i ++) {
+        cluster.fork()
+    }
+
+    require('@adonisjs/websocket/clusterPubSub')()
+    return
+}
+
+/*
+|--------------------------------------------------------------------------
 | Http server
 |--------------------------------------------------------------------------
 |
@@ -20,6 +48,7 @@
 const { Ignitor } = require('@adonisjs/ignitor')
 
 new Ignitor(require('@adonisjs/fold'))
-  .appRoot(__dirname)
-  .fireHttpServer()
-  .catch(console.error)
+    .appRoot(__dirname)
+    .wsServer() // boot the WebSocket server
+    .fireHttpServer()
+    .catch(console.error)
