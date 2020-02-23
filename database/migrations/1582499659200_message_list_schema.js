@@ -2,14 +2,14 @@
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
-const Token = use('App/Models/Token')
+const MessageList = use('App/Models/MessageList')
 const User = use('App/Models/User')
 
-class TokensSchema extends Schema {
-
+class MessageListSchema extends Schema {
+    
     up () {
-
-        this.create(Token.table, table => {
+        
+        this.create(MessageList.table, table => {
 
             table.engine('InnoDB')
             table.increments()
@@ -20,10 +20,10 @@ class TokensSchema extends Schema {
                  .inTable(User.table)
                  .onDelete('CASCADE')
                  .onUpdate('CASCADE')
-
-            table.string('token', 255).notNullable().unique().index()
-            table.string('type', 96).notNullable()
-            table.boolean('is_revoked').defaultTo(false)
+            
+            table.text('message')
+            table.enum('deleted', ['Y', 'N'])
+                 .default('N')
 
             table.timestamps()
         })
@@ -31,8 +31,8 @@ class TokensSchema extends Schema {
 
     down () {
 
-        this.drop(Token.table)
+        this.drop(MessageList.table)
     }
 }
 
-module.exports = TokensSchema
+module.exports = MessageListSchema

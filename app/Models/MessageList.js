@@ -3,8 +3,8 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Token extends Model {
-
+class MessageList extends Model {
+    
     static boot () {
 
         super.boot()
@@ -12,8 +12,9 @@ class Token extends Model {
 
     static get table () {
         
-        return 'tokens'
+        return 'message_lists'
     }
+
 }
 
-module.exports = Token
+module.exports = MessageList
