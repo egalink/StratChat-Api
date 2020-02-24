@@ -12,10 +12,19 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-// const Factory = use('Factory')
+const Factory = use('Factory')
 
-// Factory.blueprint('App/Models/User', (faker) => {
-//   return {
-//     username: faker.username()
-//   }
-// })
+
+const user = faker => {
+
+    return {
+        username: faker.username(),
+        email: faker.email(),
+        password: faker.password()
+    }
+
+}
+
+// factory to create a random users.
+// with lucid models:
+Factory.blueprint('App/Models/User', user)

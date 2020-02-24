@@ -28,6 +28,17 @@ class User extends Model {
         return 'users'
     }
 
+    static get faked () {
+        
+        const faker = use('Egalink/Factory')
+
+        return {
+            username: faker.first(),
+            email:    faker.email({ domain: 'example.com' }),
+            password: faker.string({ length: 8, casing: 'upper', alpha: true, numeric: true })
+        }
+    }
+
     /**
      * A relationship on tokens is required for auth to
      * work. Since features like `refreshTokens` or
