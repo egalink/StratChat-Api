@@ -15,10 +15,14 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+const Group = () => {
 
-Route.get('/', () => {
-    return { greeting: 'Hello world in JSON' }
-})
+     Route.get('/getLastMessages', 'MessageManagerController.listMessages')
+          .as('api:messages/all')
 
-use('App/Routes/Http/Api/UserManager')
-use('App/Routes/Http/Api/MessageManager')
+}
+
+Route.group(Group)
+     .namespace('Api')
+     .formats(['json'], true)
+     .prefix('api/messages')

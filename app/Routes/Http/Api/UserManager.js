@@ -17,10 +17,10 @@
 const Route = use('Route')
 const Group = () => {
 
-     Route.get('/signup', 'UserManager.signup')
+     Route.get('/signup', 'UserManagerController.signup')
           .as('api:user/signup')
 
-     Route.get('/getTotalUsers', 'UserManager.listUsers')
+     Route.get('/getTotalUsers', 'UserManagerController.listUsers')
           .as('api:user/all')
 
 }
