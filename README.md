@@ -1,28 +1,57 @@
-# Adonis API application
+## Servicios API para Strat-Chat
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+Servicios creados en framework [adonis.js](https://adonisjs.com/)
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+### Requerimientos:
 
-## Setup
+- Node.js >= 8.0.0  
+- npm >= 3.0.0
+- git
 
-Use the adonis command to install the blueprint
+### Instalación Adonis  CLI:
 
-```bash
-adonis new yardstick --api-only
+`npm i -g @adonisjs/cli`
+
+### Configuración de servicios:
+
+> Todos los comandos listados a continuación deberán ser ejecutados en la carpeta raíz del proyecto.
+
+1. Instalar dependencias del proyecto:
+
+`npm i`
+
+2. Crear un archivo de variables de entorno: `.env` en la carpeta raíz del proyecto, copiar y pegar el sig. contenido:
+
+```
+HOST=127.0.0.1
+PORT=3333
+NODE_ENV=development
+APP_NAME=AdonisJs
+APP_URL=http://${HOST}:${PORT}
+CACHE_VIEWS=false
+APP_KEY=
+AUTH_AUTHENTICATOR=api
+SESSION_DRIVER=cookie
+DB_CONNECTION=sqlite
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_DATABASE=strat-chat
+HASH_DRIVER=bcrypt
 ```
 
-or manually clone the repo and then run `npm install`.
+4. Ejecutar comando `adonis key:generate` para generar una clave privada.
+
+### Migraciones:
+
+Se utiliza SQLite como base de datos para agilizar la potabilidad de los servicios pero puede utilizarse cualquier tipo de servidor de BD: [saber más](https://adonisjs.com/docs/4.1/database#_supported_databases)
+
+Ejecutando el comando:
+
+`adonis migration:run`
 
 
-### Migrations
+### Ejecutar servicios:
 
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```
+`npm run start`
