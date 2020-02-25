@@ -15,9 +15,17 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+const Group = () => {
 
-Route.get('/', () => {
-    return { greeting: 'Hello world in JSON' }
-})
+     Route.get('/signup', 'UserManager.signup')
+          .as('api:user/signup')
 
-use('App/Routes/Http/Api/UserManager')
+     Route.get('/getTotalUsers', 'UserManager.listUsers')
+          .as('api:user/all')
+
+}
+
+Route.group(Group)
+     .namespace('Api')
+     .formats(['json'], true)
+     .prefix('api/users')

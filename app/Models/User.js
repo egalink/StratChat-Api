@@ -3,40 +3,23 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-/** @type {import('@adonisjs/framework/src/Hash')} */
-const Hash = use('Hash')
-
 class User extends Model {
 
     static boot () {
 
         super.boot()
+        this.addTrait('GlobalScopes')
 
         /**
          * A hook to hash the user password before saving
          * it to the database.
          */
-        this.addHook('beforeSave', async (userInstance) => {
-            if (userInstance.dirty.password) {
-                userInstance.password = await Hash.make(userInstance.password)
-            }
-        })
+        this.addHook('beforeSave', 'UserHook.hashPassword')
     }
 
     static get table () {
         
         return 'users'
-    }
-
-    static get faked () {
-        
-        const faker = use('Egalink/Factory')
-
-        return {
-            username: faker.first(),
-            email:    faker.email({ domain: 'example.com' }),
-            password: faker.string({ length: 8, casing: 'upper', alpha: true, numeric: true })
-        }
     }
 
     /**
@@ -53,6 +36,29 @@ class User extends Model {
         return this.hasMany('App/Models/Token')
     }
 
+    /**
+     * Ths user has many messages.
+     *
+     * @method tokens
+     *
+     * @return {Object}
+     */
+    messages () {
+        return this.hasMany('App/Models/Message')
+    }
+    
+    static get faked () {
+        
+        const faker = use('Egalink/Factory')
+
+        return {
+            username: faker.first(),
+            email:    faker.email({ domain: 'example.com' }),
+            password: faker.string({ length: 8, casing: 'upper', alpha: true, numeric: true })
+        }
+    }
+
+    // end model.
 }
 
 module.exports = User

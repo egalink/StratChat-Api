@@ -2,14 +2,14 @@
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
-const MessageList = use('App/Models/MessageList')
+const Message = use('App/Models/Message')
 const User = use('App/Models/User')
 
-class MessageListSchema extends Schema {
+class MessageSchema extends Schema {
     
     up () {
         
-        this.create(MessageList.table, table => {
+        this.create(Message.table, table => {
 
             table.engine('InnoDB')
             table.increments()
@@ -21,7 +21,12 @@ class MessageListSchema extends Schema {
                  .onDelete('CASCADE')
                  .onUpdate('CASCADE')
             
-            table.text('message')
+            table.text('text')
+                 .nullable()
+
+            table.timestamp('sent_at_utc')
+                 .nullable()
+
             table.enum('deleted', ['Y', 'N'])
                  .default('N')
 
@@ -31,8 +36,8 @@ class MessageListSchema extends Schema {
 
     down () {
 
-        this.drop(MessageList.table)
+        this.drop(Message.table)
     }
 }
 
-module.exports = MessageListSchema
+module.exports = MessageSchema

@@ -41,7 +41,7 @@ module.exports = {
     | will be made before terminating the client connection.
     |
     */
-    serverAttempts: 3,
+    serverAttempts: 128,
 
     /*
     |--------------------------------------------------------------------------
@@ -63,6 +63,6 @@ module.exports = {
     | been elapsed, the client will consider server as dead.
     |
     */
-    clientAttempts: 3
+    clientAttempts: 128
 
 }

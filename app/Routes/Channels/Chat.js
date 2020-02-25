@@ -13,10 +13,8 @@
 |
 */
 
-// const Ws = use('Ws')
+const Ws = use('Ws')
 
-// Ws.channel('chat', ({ socket }) => {
-//   console.log('user joined with %s socket id', socket.id)
-// })
-
-use('App/Routes/Channels/Chat')
+Ws
+    .channel('strat/chat', 'ChatController') 
+    .middleware('auth')
